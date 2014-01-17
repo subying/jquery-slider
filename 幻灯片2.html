@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>图片滚动</title>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<style type="text/css">
+*{margin:0;padding:0;border:0;}
+.clearfix:after{clear: both;content: " ";display: block;font-size: 0;height: 0;visibility: hidden;}
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}
+body,button,input,select,textarea{font:12px/1.5 \5b8b\4f53;}
+address,cite,dfn,em,var{font-style:normal;}
+code,kbd,pre,samp{font-family:courier new,courier,monospace;}
+small{font-size:12px;}
+ul,ol{list-style:none;}
+a{text-decoration:none;}
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+legend{color:#000;}
+fieldset,img{border:0;}
+img{_display:inline-block;+display:inline-block;}
+button,input,select,textarea{font-size:100%;}
+table{border-collapse:collapse;border-spacing:0;}
+.clearfix:after {visibility:hidden;display:block;font-size:0;content: " ";clear:both;height:0;}.clearfix{*zoom:1;}
+.clearline{ *zoom:1;height:0px;line-height:0px;font-size:0px;overflow:hidden;clear:both; }
+.clearperfect{ clear: both; height: 0px;overflow: hidden; }
+div,span,p {word-wrap:break-word;word-break:break-all;}
+
+.warp{width:980px;margin:0 auto;}
+
+/*slider*/
+.yslider{position:relative;overflow:hidden;}
+.yslider .slider_div{position:absolute;display:block;width:100%;height:100%;}
+.yslider .slider_div a{float:left;}
+.yslider .slider_div a img{border:none;}
+.yslider ol{position:absolute;margin:0;padding:0;list-style:none;right:10px;bottom:5px;}
+.yslider ol li{float:left;margin-left:3px;width:20px;height:20px;line-height:20px;cursor:pointer;color:#000;border:1px solid #eee;background:#fff;font-family:"arial";opacity:0.7;filter:alpha(opacity=70);text-align:center;}
+.yslider ol .li-h{background:#fc0;border-color:#118800;color:#fff;}
+.yslider .slider_cover{background:#08355C;position:absolute;bottom:0;left:0;height:30px;width:100%;opacity:0.5;filter:alpha(opacity=50);}
+.yslider .slider_txt{position:absolute;bottom:0;left:0;height:30px;color:#fff;}
+.yslider .slider_txt span{width:100%;font-size:12px;margin:6px 0 0 6px;display:block;}
+
+.fade_slider .slider_div{position:relative;}
+.fade_slider .slider_div a{position:absolute;left:0;top:0;}
+.fade_slider ol{z-index:200;}
+.fade_slider .slider_cover{z-index:198;}
+.fade_slider .slider_txt{z-index:199;}
+
+/*img list*/
+.img_list li{float:left;border:1px solid #f00;margin-right:10px;}
+
+
+.control{margin-top:20px;}
+.control li{float:left;width:30px;height:30px;line-height:30px;text-align:center;background:#ccc;margin-right:5px;cursor:pointer;}
+.control li.li-h{background:#f00;color:#fff;}
+</style>
+</head>
+
+<body>
+    <ul class="img_list clearfix">
+		<li>
+			<div id="ySlider" class="yslider" style="width:300px;height:126px;">
+				<span class="slider_div">
+					<a href="#1"><img src="images/1.jpg" alt="图片1" width="300" height="126"/></a>
+					<a href="#2"><img src="images/2.jpg" alt="图片2" width="300" height="126"/></a>
+					<a href="#3"><img src="images/3.jpg" alt="图片3" width="300" height="126"/></a>
+					<a href="#4"><img src="images/4.jpg" alt="图片4" width="300" height="126"/></a>
+					<a href="#5"><img src="images/5.jpg" alt="图片5" width="300" height="126"/></a>
+				</span>
+			</div>
+		</li>
+		<li>
+			<div id="xSlider" class="yslider" style="width:300px;height:126px;">
+				<span class="slider_div">
+					<a href="#1"><img src="images/1.jpg" alt="图片1" width="300" height="126"/></a>
+					<a href="#2"><img src="images/2.jpg" alt="图片2" width="300" height="126"/></a>
+					<a href="#3"><img src="images/3.jpg" alt="图片3" width="300" height="126"/></a>
+					<a href="#4"><img src="images/4.jpg" alt="图片4" width="300" height="126"/></a>
+					<a href="#5"><img src="images/5.jpg" alt="图片5" width="300" height="126"/></a>
+				</span>
+			</div>
+		</li>
+		<li>
+			<div id="zSlider" class="yslider" style="width:300px;height:126px;">
+				<span class="slider_div">
+					<a href="#1"><img src="images/1.jpg" alt="图片1" width="300" height="126"/></a>
+					<a href="#2"><img src="images/2.jpg" alt="图片2" width="300" height="126"/></a>
+					<a href="#3"><img src="images/3.jpg" alt="图片3" width="300" height="126"/></a>
+					<a href="#4"><img src="images/4.jpg" alt="图片4" width="300" height="126"/></a>
+					<a href="#5"><img src="images/5.jpg" alt="图片5" width="300" height="126"/></a>
+				</span>
+			</div>
+		</li>
+	</ul>
+	<div><ol id="ctrl" class="clearfix control"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li></ol></div>
+
+    <script type="text/javascript" src="jquery.js"></script>
+	<script type="text/javascript">
+	/*
+		by subying
+		tearlght2008@gmail.com
+	*/
+	var oaSlider= function(options){
+		var defaults = {
+            elem:''
+			,showStyle:{style:'slide',dir:'right'}
+            ,time:5000
+            ,control: ""
+            ,autoPlay:true
+			,controlSelector:""
+			,clickClass:'li-h'  //控制台按钮选中的样式
+        }
+		,opts =$.extend(defaults, options)
+		,_slider = new Function
+		,_reControl = ''
+		,_stop = new Function
+		;
+
+
+		if(opts.autoPlay){
+			//处理播放事件
+			_slider = function(){
+				var _self = this;
+				//
+				/*
+				_self.timer = setInterval(function(){
+					_self.mslider();
+				},opts.time);
+				*/
+				_self.timer = setTimeout(function(){
+				   _self.mslider();
+				   _self.timer = setTimeout(arguments.callee, opts.time);
+				}, opts.time);
+			};
+
+			//停止播放
+			_stop = function(){
+				//clearInterval(this.timer);
+				clearTimeout(this.timer);
+				this.timer=null;
+			};
+		}
+
+		//提取控制按钮的element
+		_reControl = function(obj){
+			var _re = {};
+			if(opts.control === ""){
+				_re = obj.children("ol");
+				if(opts.controlSelector !=""){
+					_re = obj.find(opts.controlSelector);
+				}
+			}else{
+				_re = opts.control;
+			}
+			return _re;
+		};
+
+
+
+		var elem = opts.elem;
+		if(elem.length===0) return false;
+		_img = elem.children(".slider_div").children();
+		if(_img.length<=1) return false;
+
+		this.img = elem.children(".slider_div").children();
+		this.div = elem.children(".slider_div");
+		this.ol = _reControl(elem);
+		this.txt = elem.children(".slider_txt");
+		this.cover = elem.children(".slider_cover");
+		this._width = this.img.eq(0).css('width');
+		this._height = this.img.eq(0).css('height');
+		this.mIndex = 0,this.timer = 0;
+
+		this.stop = _stop;
+		this.slider = _slider;
+		this.opts = opts;
+		this._tempAniObj = '';
+
+		this.init();
+	};
+	oaSlider.prototype={
+		init:function(){
+			var _self = this,opts = _self.opts;
+			if(opts.showStyle.style == 'fade'){
+				$.each(_self.div.children(),function(i,n){
+					if(i==0){
+						$(n).css({opacity:1,zIndex:10});
+					}else{
+						$(n).css({opacity:0,zIndex:9});
+					}
+				});
+			}else{
+				if(opts.showStyle.dir === 'right'){
+					_self.div.css({left:0,top:0,width:parseInt(_self._width)*(_self.img.length+1)});//_this_img.length+1 针对ie6最后一张图片不显示
+				}else{
+					_self.div.css({left:0,top:0,height:parseInt(_self._height)*(_self.img.length)});
+				}
+			}
+
+			_self.ol.hide();
+			$(function(){
+				_self.ol.show();
+				_self.bindFn();
+				_self.slider();
+			});
+		},
+		bindFn:function(){
+			var _self = this;
+			_self.div.hover(function(){
+				_self.stop();
+			},function(){
+				_self.slider();
+			});
+
+			/**/
+			$.each(_self.ol.children(),function(i,n){
+				var _elem = $(n);
+				if(i===0){
+					_elem.addClass(_self.opts.clickClass);
+					_self.txt.children().html(_self.img.eq(i).attr("alt"));
+				 }
+			});
+
+			 //绑定控制按钮的事件
+			_self.ol.children().on('click',function(){
+				var i = $(this).index();
+				_self.stop();//清楚时间间隔动画，停止自动播放
+				if(i != _self.mIndex){//如果要跳转到的图片是当前的图片，则不执行图片切换。
+					_self.mslider(i,true);
+				}
+				_self.slider();//恢复自动播放
+			});
+
+		},
+		mslider:function(num,clicked){
+			var n = 0,_self = this,opts = _self.opts;
+			if(typeof(num) ==='undefined' ){
+				var num = _self.mIndex + 1;
+			}
+			if(num < _self.img.length){
+				n = num;
+			}
+
+			var _now = _self.div.children().eq(_self.mIndex),_next = _self.div.children().eq(n);
+
+			if(opts.showStyle.style == 'fade'){
+				if(_self._tempAniObj){
+					_self._tempAniObj.stop(true);
+				}
+				_now.css({zIndex:10}).siblings().css({zIndex:9,opacity:0});
+				_next.css({opacity:1});
+				_self._tempAniObj = _now;
+				_now.animate({opacity:0},500,function(){
+					_now.css({zIndex:9});
+					_next.css({zIndex:10});
+				});
+			}else{
+				if(opts.showStyle.dir === 'right'){
+					_self.div.animate({left:-n*parseInt(_self._width)},1000);
+				}else{
+					_self.div.animate({top:-n*parseInt(_self._height)},1000);
+				}
+			}
+			_self.txt.children().html(_self.img.eq(n).attr("alt"));
+			_self.ol.children().eq(n).addClass(opts.clickClass).siblings().removeClass(opts.clickClass);
+			_self.mIndex = n;
+
+		}
+	};
+
+	var $ctrl = $('#ctrl')
+		,$s1 = $('#ySlider')
+		,$s2 = $('#xSlider')
+		,$s3 = $('#zSlider')
+	;
+
+	var slider1 = new oaSlider({
+		elem:$s1
+		,control:$ctrl
+	});
+	var slider2 = new oaSlider({
+		elem:$s2
+		,control:$ctrl
+	});
+	var slider3 = new oaSlider({
+		elem:$s3
+		,control:$ctrl
+	});
+	</script>
+</body>
+</html>
