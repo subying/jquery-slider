@@ -1,0 +1,22 @@
+*{margin:0;padding:0;border:0;}
+.clearfix:after{clear: both;content: " ";display: block;font-size: 0;height: 0;visibility: hidden;}
+body,h1,h2,h3,h4,h5,h6,hr,p,blockquote,dl,dt,dd,ul,ol,li,pre,form,fieldset,legend,button,input,textarea,th,td{margin:0;padding:0;}
+body,button,input,select,textarea{font:12px/1.5 \5b8b\4f53;}
+address,cite,dfn,em,var{font-style:normal;}
+code,kbd,pre,samp{font-family:courier new,courier,monospace;}
+small{font-size:12px;}
+ul,ol{list-style:none;}
+a{text-decoration:none;}
+sup{vertical-align:text-top;}
+sub{vertical-align:text-bottom;}
+legend{color:#000;}
+fieldset,img{border:0;}
+img{_display:inline-block;+display:inline-block;}
+button,input,select,textarea{font-size:100%;}
+table{border-collapse:collapse;border-spacing:0;}
+.clearfix:after {visibility:hidden;display:block;font-size:0;content: " ";clear:both;height:0;}.clearfix{*zoom:1;}
+.clearline{ *zoom:1;height:0px;line-height:0px;font-size:0px;overflow:hidden;clear:both; }
+.clearperfect{ clear: both; height: 0px;overflow: hidden; }
+div,span,p {word-wrap:break-word;word-break:break-all;}
+
+.warp{width:980px;margin:0 auto;}
